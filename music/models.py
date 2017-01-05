@@ -16,7 +16,7 @@ class AlbumList(models.Model):
         return self.album_title + '-' + self.artist
 
 class SongList(models.Model):
-    album = models.ForeignKey(AlbumList , on_delete=models.CASCADE())
+    album = models.ForeignKey(AlbumList , on_delete=models.CASCADE)
     song_title = models.CharField(max_length=200)
     song_file = models.FileField(max_length=1000)
     is_public = models.BooleanField(default=False)

@@ -1,6 +1,68 @@
 {% extends 'music/base.html' %}
+{% block albums_active %}active{% endblock %}
+
 
 {% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- Albums -->
+    <div class="row">
+        <div class="col-sm-12">
+
+        </div>
+        {% if albums %}
+            {% for album in albums %}
+                {% if album.is_public == True %}
 
 
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                    {% if album.album_logo %}
+
+
+                        <a href="{% url 'music:index' %}">
+                            <img src="{{ album.album_logo.url }}" class="img-responsive">
+                        </a>
+                        {% else %}
+                        <h2>No images for displaying</h2>
+                         {% endif %}
+                        <div class="caption">
+                            <h2>{{ album.album_title }}</h2>
+                            <h4>{{ album.artist }}</h4>
+
+                            <!-- View Details -->
+                            <a href="{% url 'music:index' %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+
+                            <!-- Delete Album -->
+                            <form action="{% url 'music:index' %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="album_id" value="{{ album.id }}" />
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </form>
+
+                            <!-- Favorite Album -->
+                            <a href="{% url 'music:index' %}" class="btn btn-default btn-sm btn-favorite" role="button">
+                                <span class="glyphicon glyphicon-star {% if album.is_public %}active{% endif %}"></span>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'music:index' %}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Album
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

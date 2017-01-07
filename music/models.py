@@ -5,13 +5,13 @@ from django.db import models
 # Create your models here.
 
 class AlbumList(models.Model):
-    user = models.ForeignKey(User, default=1)
+    #user = models.ForeignKey(User, default=1)
     album_title = models.CharField(max_length=500)
     artist = models.CharField(max_length=200)
     desc = models.CharField(max_length=1000)
-    album_logo = models.FileField(2000)
-    is_public = models.BooleanField(default=False)
-    likes = models.IntegerField(default=0)
+    album_logo = models.FileField(max_length=2000)
+    is_public = models.BooleanField(default=0)
+    likes = models.IntegerField(default=None)
     def __str__(self):
         return self.album_title + '-' + self.artist
 
